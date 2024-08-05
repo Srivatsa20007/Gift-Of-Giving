@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Your Donation</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #7f91d4;
+      color: white;
+      font-size: 24px;
+    }
+    .details>h2{
+      text-decoration: underline;
+    }
+    #map {
+      height: 70vh;
+      width: 100%;
+    }
+    .details {
+      margin: 20px;
+    }
+  </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5Whp6Peh-ZQ-7ZpFAnve7vM5H_Vvapik&libraries=geometry,places" async defer></script>
+</head>
+<body>
+  <div id="map"></div>
+  <div class="details">
+    <h2>Employee details</h2>
+    <h3>Name: <span id="employeeName"></span></h3>
+    <h3>Mobile No: <span id="employeeMobile"></span></h3>
+  </div>
+
+  <script>
+    let map;
+    let geocoder;
+    let directionsService;
+    let directionsRenderer;
+
+    function initMap() {
+      // Retrieve data from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const userAddress = decodeURIComponent(urlParams.get('address') || 'Default Address');
+      const userName = decodeURIComponent(urlParams.get('name') || 'John Doe');
+      const userPhone = decodeURIComponent(urlParams.get('phone') || '1234567890');
+      const userMessage = decodeURIComponent(urlParams.get('message') || '');
+      const userDonation = decodeURIComponent(urlParams.get('donation') || '');
+
+      // Initialize map
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 12,
+        center: { lat: 17.40241, lng: 78.45311 } // Default center
+      });
+
+      geocoder = new google.maps.Geocoder();
+      directionsService = new google.maps.DirectionsService();
+      directionsRenderer = new google.maps.DirectionsRenderer();
+      directionsRenderer.setMap(map);
+
+      // Geocode user address and find nearest employee
+      geocodeAddress(userAddress, (userLocation) => {
+        map.setCenter(userLocation);
+        new google.maps.Marker({
+          map: map,
+          position: userLocation,
+          title: 'User Location',
+          icon: 'https://example.com/path/to/your/user-marker-icon.png' // URL to your custom marker image
+        });
+
+        // Fetch employee data and find the nearest employee
+        fetch('http://localhost:3000/employees') // Adjust URL if needed
+          .then(response => response.json())
+          .then(employees => {
+            if (employees.length === 0) {
+              console.log('No employees found');
+              return;
+            }
+            
+            console.log('Employees Data:', employees);
+            console.log(findNearestEmployee(userLocation, employees));
+          })
+          .catch(error => console.error('Error fetching employee data:', error));
+      });
+    }
+
+    function geocodeAddress(address, callback) {
+      geocoder.geocode({'address': address}, (results, status) => {
+        if (status === 'OK') {
+          callback(results[0].geometry.location);
+        } else {
+          console.error('Geocode was not successful for the following reason: ' + status);
+          alert('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+    }
+
+    function findNearestEmployee(userLocation, employees) {
+      let nearestEmployee = null;
+      let minDistance = Infinity;
+      const service = new google.maps.DistanceMatrixService();
+
+      const employeeAddresses = employees.map(emp => emp.address);
+      
+      service.getDistanceMatrix({
+        origins: [userLocation],
+        destinations: employeeAddresses,
+        travelMode: 'DRIVING'
+      }, (response, status) => {
+        if (status === 'OK') {
+          const distances = response.rows[0].elements;
+
+          distances.forEach((element, index) => {
+            if (element.status === 'OK') {
+              const distance = element.distance.value; // Distance in meters
+              if (distance < minDistance) {
+                minDistance = distance;
+                nearestEmployee = employees[index];
+              }
+            }
+          });
+
+          if (nearestEmployee) {
+            geocodeAddress(nearestEmployee.address, (employeeLocation) => {
+              new google.maps.Marker({
+                map: map,
+                position: employeeLocation,
+                title: 'Nearest Employee Location',
+                icon: 'https://example.com/path/to/your/employee-marker-icon.png' // URL to your custom marker image
+              });
+
+              showRoute(userLocation, employeeLocation);
+
+              // Update employee details on the page
+              document.getElementById('employeeName').textContent = nearestEmployee.name;
+              document.getElementById('employeeMobile').textContent = nearestEmployee.mobileno;
+              console.log(nearestEmployee.email)
+
+              // Send email to the nearest employee
+              fetch('http://localhost:3000/email', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                          employeeEmail: nearestEmployee.email
+                        })
+                      }).then(response => response.text())
+                        .then(data => {
+                          console.log('Email sent:', data);
+                          
+                        })
+                        .catch(error => {
+                          console.error('Error sending email:', error);
+                        });
+
+            });
+          }
+        } else {
+          console.error('Distance Matrix service failed due to: ' + status);
+          alert('Distance Matrix service failed due to: ' + status);
+        }
+      });
+    }
+
+    function showRoute(startLocation, endLocation) {
+      const request = {
+        origin: startLocation,
+        destination: endLocation,
+        travelMode: 'DRIVING'
+      };
+
+      directionsService.route(request, (result, status) => {
+        if (status === 'OK') {
+          directionsRenderer.setDirections(result);
+        } else {
+          console.error('Directions request failed due to ' + status);
+          alert('Directions request failed due to ' + status);
+        }
+      });
+    }
+
+    window.onload = initMap;
+  </script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #303054;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #c3d2fd;
+    border-radius: 10px;
+}
+
+* {
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+}
+
+.border {
+    border: 2px solid red;
+}
+
+
+.container {
+    width: 100vw;
+    overflow: hidden;
+}
+
+.nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 30px;
+    font-size: 22px;
+    font-weight: 600;
+    padding: 1px;
+}
+
+.title {
+    color: white;
+    font-size: 22px;
+    font-weight: 600;
+    margin-left: 50px;
+    padding: 0px;
+    position: relative;
+    top: 24px;
+}
+
+.nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.navitem {
+    cursor: pointer;
+    ;
+}
+
+.navitem:hover {
+    color: rgb(250, 250, 250, 0.5);
+}
+
+.missions {
+    margin-right: 300px;
+    ;
+}
+
+.nav {
+    background-color: #303054;
+    height: 10vh;
+    position: fixed;
+    display: flex;
+    gap: 300px;
+    padding: 0px;
+    width: 100vw;
+    z-index: 2;
+}
+
+.donate a {
+    text-decoration: none;
+    color: white;
+}
+
+#home {
+    background-color: #ffffff;
+    height: 80vh;
+    width: 100vw;
+}
+
+.homeinfo {
+    font-size: 1.3rem;
+    font-weight: 600;
+    position: relative;
+    top: -200px;
+    left: 300px;
+}
+.img {
+    height: 350px;
+    width: 390px;
+    position: relative;
+    left: 800px;
+    top: 100px;
+}
+
+.donate {
+    position: relative;
+    left: 400px;
+    bottom: 170px;
+    height: 40px;
+    width: 105px;
+    font-size: 1rem;
+    font-weight: 400;
+    background-color: #303054;
+    color: white;
+    transition: all 0.5;
+    top: -160px;
+}
+.donate:hover {
+    background-color: #bde4f9;
+    color: black;
+}
+
+#donation {
+    min-height: 150vh;
+    width: 100vw;
+    background-color: #e6edff;
+}
+
+.donationinfo {
+    position: relative;
+    left: 305px;
+    top: 50px;
+}
+.bt{
+    display:none;
+}
+.cardcontainer {
+    position: relative;
+    left: 250px;
+    top: 70px;
+    width: 80vw;
+    height: 70vh;
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cardcontainer h2 {
+    margin-left: 75px;
+    margin-top: 30px;
+    display: flex;
+
+    flex-wrap: wrap;
+    font-weight: 400;
+}
+
+.card {
+    background-color: #ffffff;
+    margin: 10px;
+    margin-left: 75px;
+    margin-top: 30px;
+    width: 250px;
+    height: 250px;
+    font-weight: 400;
+    align-items: center;
+}
+
+.cardimg {
+    width: 100px;
+    height: 100px;
+    margin-left: 60px;
+    margin-top: 10px;
+}
+
+.carddonate {
+    margin-left: 70px;
+    margin-top: 20px;
+    height: 40px;
+    width: 105px;
+    font-size: 1rem;
+    font-weight: 400;
+    background-color: #303054;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.carddonate a {
+    text-decoration: none;
+    color: white;
+}
+
+.carddonate:hover {
+    color: black;
+    background-color: #bde4f9;
+    ;
+}
+
+.carddonate a {
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+#mission {
+    width: 100vw;
+    min-height: 100vh;
+    background-color: #ffffff;
+}
+
+.missioninfo {
+    position: relative;
+    font-size: 20px;
+    font-weight: 400;
+    top: 50px;
+    left: 300px;
+    width: 1100px;
+}
+
+.missioninfo h4 {
+    margin: 60px 0px;
+    font-weight: 380;
+}
+
+.image {
+    width: 250px;
+    height: 150px;
+    margin: 20px;
+    border-radius: 10px;
+}
+
+.imagecontainer {
+
+
+    WIDTH: 900px;
+    min-height: 300px;
+    margin-left: 300px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#about {
+    background-color: #e6edff;
+    width: 100vw;
+    min-height: 120vh;
+}
+
+#about>h1 {
+    margin-left: 300px;
+    font-size: 30px;
+
+}
+
+.whatwedo {
+
+    position: relative;
+    margin-left: 300px;
+    top: 50px;
+
+}
+
+.whywedo {
+    position: relative;
+    margin-left: 300px;
+    top: 90px;
+
+}
+
+.lessfontweight {
+    font-weight: 400;
+}
+
+.aboutinfo {
+    margin-top: 20px;
+}
+
+.margin-top {
+    position: relative;
+    top: 30px;
+}
+
+#contact {
+    width: 100vw;
+    height: 80vh;
+}
+
+#contact>h1 {
+    margin-left: 300px;
+    font-size: 30px;
+}
+
+.connect {
+    margin-left: 300px;
+    font-weight: 300px;
+}
+
+.details {
+    position: relative;
+    top: 50px;
+    margin-left: 300px;
+    display: flex;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+
+.input {
+    height: 50px;
+    width: 400px;
+    border-radius: 8px;
+    font-size: 16px;
+    padding-left:10px;
+}
+
+select {
+    word-wrap: none;
+    top: 100px;
+    position: relative;
+    left: 400px;
+    width: 150px;
+    height: 50px;
+    border-radius: 8px;
+    ;
+}
+
+.btn1 {
+    font-size: 1rem;
+    font-weight: 400;
+    background-color: #303054;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none !important;
+    transition: all 0.5s;
+    position: relative;
+    top: 200px;
+    left: 500px;
+}
+
+.btn1:hover {
+    background-color: #bde4f9;
+    color: black;
+}
+
+.footer {
+    background-color: #303054;
+    width: 100vw;
+    height: 30vh;
+    display: flex;
+    gap:100px;
+}
+
+.address {
+    color: white;
+    width: 400px;
+    height: 300px;
+    margin-left: 150px;
+    margin-top: 40px;
+}
+
+.implinks {
+    color: white;
+    margin-top: 50px;
+}
+
+.implinks ul {
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+.implinks ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.msg {
+    font-size: 16px;
+    padding:10px;
+}
+
+.select {
+    font-size: 16px;
+}
+.signup{
+    color:white;
+    cursor: pointer;
+}
+.login{
+    color:white;
+    cursor: pointer;
+}
+.signup:hover{
+    color:#e6edff;
+   font-size: 1.5rem;;
+}
+.login:hover{
+    color:#e6edff;
+   font-size: 1.5rem;;
+}
+.feedback {
+    color: white;
+    text-decoration: none;
+    width: 150px;
+    height: 100px;
+    position: relative;
+    left: 150px;
+    top: 50px;
+}
+.feedback a{
+    text-decoration: none;
+    color:white;
+    position:relative;
+font-size:20px;
+}
